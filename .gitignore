@@ -1,0 +1,7 @@
+/Application/config/development.php
+/Application/config/production.php
+/init/static/Nginx-*
+/init/www/Nginx-*
+.htaccess
+!.gitignore
+!.gitkeep
