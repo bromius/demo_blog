@@ -2,6 +2,8 @@
 /Application/config/production.php
 /init/static/Nginx-*
 /init/www/Nginx-*
+/logs/*
+/init/static/upload/*
 .htaccess
 !.gitignore
 !.gitkeep
