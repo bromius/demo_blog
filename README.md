@@ -29,4 +29,8 @@
 
 ---
 
+![Screenshot](https://github.com/bromius/demo_blog/blob/master/resources/screenshot.png)
+
+---
+
 ###### (c) Kinweb
