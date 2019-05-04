@@ -1,0 +1,74 @@
+= Start [04.05.2019 13:20:31] [127.0.0.1 | testapp.lc] ================>
+Error: #0 {
+    "error": "Error",
+    "errno": 4096,
+    "message": "Object of class stdClass could not be converted to string",
+    "file": "C:\\OpenServer\\domains\\testapp\\Application\\Core\\Security.php",
+    "line": 23
+} [C:\OpenServer\domains\testapp\Application\Core\Errors.php:46]
+Backtrace:
+#0 C:\OpenServer\domains\testapp\Application\Core\Security.php(23): Application\Core\Errors::Application\Core\{closure}(4096, 'Object of class...', 'C:\\OpenServer\\d...', 23, Array)
+#1 C:\OpenServer\domains\testapp\Application\Module\View\index.php(59): Application\Core\Security::getCSRFToken()
+#2 C:\OpenServer\domains\testapp\Application\Core\View.php(69): require('C:\\OpenServer\\d...')
+#3 C:\OpenServer\domains\testapp\Application\Core\Controller.php(17): Application\Core\View->__construct('index', Array)
+#4 C:\OpenServer\domains\testapp\Application\Module\Controller\IndexController.php(32): Application\Core\Controller::view('index', Array)
+#5 [internal function]: Application\Module\Controller\IndexController::indexAction()
+#6 C:\OpenServer\domains\testapp\Application\Bootstrap.php(85): call_user_func(Array)
+#7 C:\OpenServer\domains\testapp\Application\Bootstrap.php(44): Application\Bootstrap::run()
+#8 C:\OpenServer\domains\testapp\init\www\index.php(5): Application\Bootstrap::init()
+#9 {main}
+< End =========================================
+
+
+= Start [04.05.2019 14:31:38] [127.0.0.1 | testapp.lc] ================>
+Error: #0 {
+    "error": "Error",
+    "errno": 8,
+    "message": "Undefined offset: 2",
+    "file": "C:\\OpenServer\\domains\\testapp\\Application\\Core\\Security.php",
+    "line": 63
+} [C:\OpenServer\domains\testapp\Application\Core\Errors.php:46]
+Backtrace:
+#0 C:\OpenServer\domains\testapp\Application\Core\Security.php(63): Application\Core\Errors::Application\Core\{closure}(8, 'Undefined offse...', 'C:\\OpenServer\\d...', 63, Array)
+#1 C:\OpenServer\domains\testapp\Application\Module\Controller\AuthController.php(68): Application\Core\Security::checkCSRFToken('8HMDUBRhkLcp6iF...')
+#2 [internal function]: Application\Module\Controller\AuthController::signinAction()
+#3 C:\OpenServer\domains\testapp\Application\Bootstrap.php(85): call_user_func(Array)
+#4 C:\OpenServer\domains\testapp\Application\Bootstrap.php(44): Application\Bootstrap::run()
+#5 C:\OpenServer\domains\testapp\init\www\index.php(5): Application\Bootstrap::init()
+#6 {main}
+< End =========================================
+
+
+= Start [04.05.2019 14:31:39] [127.0.0.1 | testapp.lc] ================>
+Error: #0 {
+    "error": "Error",
+    "errno": 8,
+    "message": "Undefined offset: 2",
+    "file": "C:\\OpenServer\\domains\\testapp\\Application\\Core\\Security.php",
+    "line": 63
+} [C:\OpenServer\domains\testapp\Application\Core\Errors.php:46]
+Backtrace:
+#0 C:\OpenServer\domains\testapp\Application\Core\Security.php(63): Application\Core\Errors::Application\Core\{closure}(8, 'Undefined offse...', 'C:\\OpenServer\\d...', 63, Array)
+#1 C:\OpenServer\domains\testapp\Application\Module\Controller\AuthController.php(68): Application\Core\Security::checkCSRFToken('8HMDUBRhkLcp6iF...')
+#2 [internal function]: Application\Module\Controller\AuthController::signinAction()
+#3 C:\OpenServer\domains\testapp\Application\Bootstrap.php(85): call_user_func(Array)
+#4 C:\OpenServer\domains\testapp\Application\Bootstrap.php(44): Application\Bootstrap::run()
+#5 C:\OpenServer\domains\testapp\init\www\index.php(5): Application\Bootstrap::init()
+#6 {main}
+< End =========================================
+
+
+= Start [04.05.2019 14:32:34] [127.0.0.1 | testapp.lc] ================>
+Error: #0 Autoload failed for C:\OpenServer\domains\testapp//Application/Module/Controller/Security.php [C:\OpenServer\domains\testapp\Application\Core\Autoload.php:33]
+Backtrace:
+#0 [internal function]: Application\Core\Autoload::Application\Core\{closure}('Application\\Mod...')
+#1 C:\OpenServer\domains\testapp\Application\Module\Controller\PostController.php(51): spl_autoload_call('Application\\Mod...')
+#2 [internal function]: Application\Module\Controller\PostController::saveAction()
+#3 C:\OpenServer\domains\testapp\Application\Bootstrap.php(85): call_user_func(Array)
+#4 C:\OpenServer\domains\testapp\Application\Bootstrap.php(44): Application\Bootstrap::run()
+#5 C:\OpenServer\domains\testapp\init\www\index.php(5): Application\Bootstrap::init()
+#6 {main}
+< End =========================================
+
+
+

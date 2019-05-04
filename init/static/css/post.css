@@ -1,0 +1,28 @@
+
+h1 {
+	font-size: 2rem;
+	margin-bottom: 2rem;
+}
+
+.post-content {
+	color: #333;
+	margin-bottom: 2rem;
+}
+
+.post-content img {
+	float: right;
+	margin: 0 0 2rem 2rem;
+}
+
+.post-date {
+	font-size: 1rem;
+	color: #757575;
+	margin-bottom: 1rem;
+}
+
+@media (min-width: 992px) {
+	.post {
+		max-width: 992px;
+		margin: 0 auto;
+	}
+}

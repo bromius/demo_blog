@@ -1,0 +1,14 @@
+
+
+.post-shortcut .post-content {
+	width: 100%;
+}
+
+.post-shortcut .post-date {
+	font-size: .8rem;
+}
+
+.post-shortcut img {
+	max-width: 100px;
+	margin: 0 0 1rem 1rem;
+}

@@ -1,0 +1,3 @@
+User-Agent: *
+Disallow: /
+Host: static.testapp.lc
