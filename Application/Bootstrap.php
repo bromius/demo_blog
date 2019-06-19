@@ -42,7 +42,7 @@ final class Bootstrap implements Core\Interfaces\Initializable
             Core\Request::init();
 
             print static::run();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             try {
                 // Flush previous output
                 if (ob_get_length())

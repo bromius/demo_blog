@@ -2,7 +2,7 @@
 
 namespace Application\Module\Model;
 
-use Application\Core\String;
+use Application\Core\Strings;
 use Application\Core\Db;
 use Application\Core\Registry;
 
@@ -16,7 +16,7 @@ class UsersModel extends \Application\Core\Model
      * 
      * @var string
      */
-    protected static $_table = 'users';
+    protected static $table = 'users';
 
     /**
      * Get user model

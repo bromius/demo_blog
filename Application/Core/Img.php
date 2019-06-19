@@ -7,21 +7,21 @@ namespace Application\Core;
  */
 class Img
 {
-    protected $_image;
-    protected $_imageType = '';
-    protected $_width = 0;
-    protected $_height = 0;
+    protected $image;
+    protected $imageType = '';
+    protected $width = 0;
+    protected $height = 0;
 
     public function load($fileName)
     {
-        list ($this->_width, $this->_height, $this->_imageType) = getimagesize($fileName);
+        list ($this->width, $this->height, $this->imageType) = getimagesize($fileName);
 
-        if ($this->_imageType == IMAGETYPE_JPEG)
-            $this->_image = imagecreatefromjpeg($fileName);
-        else if ($this->_imageType == IMAGETYPE_GIF)
-            $this->_image = imagecreatefromgif($fileName);
-        else if ($this->_imageType == IMAGETYPE_PNG)
-            $this->_image = imagecreatefrompng($fileName);
+        if ($this->imageType == IMAGETYPE_JPEG)
+            $this->image = imagecreatefromjpeg($fileName);
+        else if ($this->imageType == IMAGETYPE_GIF)
+            $this->image = imagecreatefromgif($fileName);
+        else if ($this->imageType == IMAGETYPE_PNG)
+            $this->image = imagecreatefrompng($fileName);
 
         return $this;
     }
@@ -29,10 +29,10 @@ class Img
     public function width($width = null)
     {
         if (!$width)
-            return $this->_width;
+            return $this->width;
 
-        $ratio = $width / imagesx($this->_image);
-        $height = imagesy($this->_image) * $ratio;
+        $ratio = $width / imagesx($this->image);
+        $height = imagesy($this->image) * $ratio;
         $this->resize($width, $height);
 
         return $this;
@@ -41,10 +41,10 @@ class Img
     public function height($height = null)
     {
         if (!$height)
-            return $this->_height;
+            return $this->height;
 
-        $ratio = $height / imagesy($this->_image);
-        $width = imagesx($this->_image) * $ratio;
+        $ratio = $height / imagesy($this->image);
+        $width = imagesx($this->image) * $ratio;
         $this->resize($width, $height);
 
         return $this;
@@ -64,11 +64,11 @@ class Img
     {
         $newImage = imagecreatetruecolor($width, $height);
 
-        imagecopyresampled($newImage, $this->_image, 0, 0, 0, 0, $width, $height, $this->width(), $this->height());
+        imagecopyresampled($newImage, $this->image, 0, 0, 0, 0, $width, $height, $this->width(), $this->height());
 
-        $this->_image = $newImage;
-        $this->_width = $width;
-        $this->_height = $height;
+        $this->image = $newImage;
+        $this->width = $width;
+        $this->height = $height;
 
         return $this;
     }
@@ -84,30 +84,30 @@ class Img
     {
         if ($type == IMAGETYPE_JPEG) {
             // If image type is PNG, use special way to convert it correctly to JPG (transparent background problem)
-            if ($this->_imageType == IMAGETYPE_PNG) {
+            if ($this->imageType == IMAGETYPE_PNG) {
                 $bg = imagecreatetruecolor($this->width(), $this->height());
                 imagefill($bg, 0, 0, imagecolorallocate($bg, 255, 255, 255));
                 imagealphablending($bg, true);
-                imagecopy($bg, $this->_image, 0, 0, 0, 0, $this->width(), $this->height());
+                imagecopy($bg, $this->image, 0, 0, 0, 0, $this->width(), $this->height());
                 imagejpeg($bg, $filePath, $compression);
                 imagedestroy($bg);
             } else {
-                imagejpeg($this->_image, $filePath, $compression);
+                imagejpeg($this->image, $filePath, $compression);
             }
         } else if ($type == IMAGETYPE_GIF) {
-            imagegif($this->_image, $filePath);
+            imagegif($this->image, $filePath);
         } else if ($type == IMAGETYPE_PNG) {
-            imagepng($this->_image, $filePath);
+            imagepng($this->image, $filePath);
         }
     }
 
     public function output($type = IMAGETYPE_JPEG)
     {
         if ($type == IMAGETYPE_JPEG)
-            imagejpeg($this->_image);
+            imagejpeg($this->image);
         else if ($type == IMAGETYPE_GIF)
-            imagegif($this->_image);
+            imagegif($this->image);
         else if ($type == IMAGETYPE_PNG)
-            imagepng($this->_image);
+            imagepng($this->image);
     }
 }

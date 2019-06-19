@@ -14,21 +14,21 @@ class Router implements Interfaces\Initializable
      *
      * @var Router 
      */
-    protected static $_instance;
+    protected static $instance;
     
     /**
      * Default controller
      *
      * @var string
      */
-    protected $_controller = 'IndexController';
+    protected $controller = 'IndexController';
     
     /**
      * Default action
      *
      * @var string
      */
-    protected $_action = 'indexAction';
+    protected $action = 'indexAction';
 
     /**
      * Initialization
@@ -37,23 +37,23 @@ class Router implements Interfaces\Initializable
      */
     public static function init()
     {
-        if (static::$_instance)
-            return static::$_instance;
+        if (static::$instance)
+            return static::$instance;
 
         $url = Url::parse(Request::uri());
         $urlParts = explode('/', trim($url->path, '/'));
 
-        static::$_instance = new static();
+        static::$instance = new static();
 
         // Controller
         if (!empty($urlParts[0]))
-            static::$_instance->_controller = ucfirst(strtolower($urlParts[0])) . 'Controller';
+            static::$instance->controller = ucfirst(strtolower($urlParts[0])) . 'Controller';
 
         // Action
         if (!empty($urlParts[1]))
-            static::$_instance->_action = lcfirst(strtolower($urlParts[1])) . 'Action';
+            static::$instance->action = lcfirst(strtolower($urlParts[1])) . 'Action';
 
-        return static::$_instance;
+        return static::$instance;
     }
 
     /**
@@ -63,7 +63,7 @@ class Router implements Interfaces\Initializable
      */
     public function controller()
     {
-        return $this->_controller;
+        return $this->controller;
     }
 
     /**
@@ -73,7 +73,7 @@ class Router implements Interfaces\Initializable
      */
     public function action()
     {
-        return $this->_action;
+        return $this->action;
     }
 
     /**

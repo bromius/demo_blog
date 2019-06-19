@@ -25,7 +25,7 @@ namespace Application\Core
          *
          * @var object
          */
-        protected static $_data;
+        protected static $data;
 
         /**
          * Initialization
@@ -34,7 +34,7 @@ namespace Application\Core
         {
             $data = require_once APP_DIR . 'config/' . WORK_MODE . '.php';
 
-            static::$_data = Arrays::toObject($data);
+            static::$data = Arrays::toObject($data);
 
             date_default_timezone_set(static::get()->timezone);
             mb_internal_encoding(static::get()->encoding);
@@ -48,9 +48,9 @@ namespace Application\Core
          */
         public static function get()
         {
-            if (!static::$_data)
+            if (!static::$data)
                 static::init();
-            return isset(static::$_data) ? static::$_data : null;
+            return isset(static::$data) ? static::$data : null;
         }
     }
 }

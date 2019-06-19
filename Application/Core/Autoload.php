@@ -10,7 +10,7 @@ require_once 'Registry.php';
  */
 class Autoload implements Interfaces\Initializable
 {
-    protected static $_autoloadPaths = [''];
+    protected static $autoloadPaths = [''];
 
     /**
      * Initialization
@@ -21,16 +21,13 @@ class Autoload implements Interfaces\Initializable
     {
         spl_autoload_register(function ($name) {
             $filePath = $name . '.php';
-
-            foreach (static::$_autoloadPaths as $dir) {
+            foreach (static::$autoloadPaths as $dir) {
                 $completePath = ROOT_DIR . $dir . '/' . str_replace('\\', '/', $filePath);
                 if (is_readable($completePath)) {
                     require_once $completePath;
                     return;
                 }
             }
-
-            throw new Exceptions\SystemException('Autoload failed for ' . $completePath);
         });
     }
 }

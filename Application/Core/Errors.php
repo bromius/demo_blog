@@ -12,7 +12,7 @@ class Errors implements Interfaces\Initializable
 {
     public static function init()
     {
-        register_shutdown_function(function() {
+        register_shutdown_function(function () {
             if (!$error = error_get_last())
                 return;
 
@@ -21,17 +21,17 @@ class Errors implements Interfaces\Initializable
             chdir(APP_DIR);
 
             $errorStr = static::_prepareMessage([
-                        'error' => 'Shutdown Error',
-                        'type' => $error['type'],
-                        'message' => $error['message'],
-                        'file' => $error['file'],
-                        'line' => $error['line']
+                'error' => 'Shutdown Error',
+                'type' => $error['type'],
+                'message' => $error['message'],
+                'file' => $error['file'],
+                'line' => $error['line']
             ]);
 
             throw new SystemException($errorStr);
         });
 
-        set_error_handler(function($errno, $message, $file, $line) {
+        set_error_handler(function ($errno, $message, $file, $line) {
             if (WORK_MODE == 'production' && in_array($errno, [E_WARNING, E_NOTICE]))
                 return;
 

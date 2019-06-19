@@ -5,7 +5,7 @@ namespace Application\Core;
 /**
  * String core module
  */
-class String
+class Strings
 {
     /**
      * Escapes texts output

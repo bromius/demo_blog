@@ -2,7 +2,7 @@
 
 namespace Application\Core;
 
-use Application\Core\String;
+use Application\Core\Strings;
 use Application\Core\Request;
 use Application\Core\Exceptions\PublicException;
 
@@ -23,7 +23,7 @@ class Security
      * 
      * @var string
      */
-    protected static $_csrfTokenName = 'csrf_token';
+    protected static $csrfTokenName = 'csrf_token';
 
     /**
      * Get CSRF token parameter name
@@ -32,7 +32,7 @@ class Security
      */
     public static function getCSRFParamName()
     {
-        return static::$_csrfTokenName;
+        return static::$csrfTokenName;
     }
 
     /**
@@ -44,7 +44,7 @@ class Security
      */
     public static function getCSRFToken($salt = '', $time = 0)
     {
-        $salt = $salt ? : String::random(32);
+        $salt = $salt ? : Strings::random(32);
         $time = $time ? : time();
         return $salt . ':' . $time . ':' . sha1($salt . $time . Request::ip() . cfg()->salt->csrf);
     }

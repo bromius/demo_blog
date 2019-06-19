@@ -15,13 +15,13 @@ abstract class Model
      * Table name
      * @var string
      */
-    protected static $_table = '';
+    protected static $table = '';
 
     /**
      * Associative array, table row data
      * @var array
      */
-    protected $_data = [];
+    protected $data = [];
 
     /**
      * Model table name
@@ -30,7 +30,7 @@ abstract class Model
      */
     public static function table()
     {
-        return static::$_table;
+        return static::$table;
     }
 
     /**
@@ -169,7 +169,7 @@ abstract class Model
 			DELETE 
 			FROM `' . static::table() . '` 
 			WHERE id = #d
-		', $this->_data['id']);
+		', $this->data['id']);
     }
 
     /**
@@ -202,7 +202,7 @@ abstract class Model
     {
         if (!$data)
             return $this;
-        $this->_data = $data;
+        $this->data = $data;
     }
 
     /**
@@ -213,7 +213,7 @@ abstract class Model
      */
     public function __set($key, $value)
     {
-        $this->_data[$key] = $value;
+        $this->data[$key] = $value;
     }
 
     /**
@@ -224,7 +224,7 @@ abstract class Model
      */
     public function __get($key)
     {
-        return array_key_exists($key, $this->_data) ? $this->_data[$key] : null;
+        return array_key_exists($key, $this->data) ? $this->data[$key] : null;
     }
 
     /**
@@ -235,6 +235,6 @@ abstract class Model
      */
     public function __isset($key)
     {
-        return array_key_exists($key, $this->_data);
+        return array_key_exists($key, $this->data);
     }
 }

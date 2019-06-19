@@ -15,35 +15,35 @@ class View
      * 
      * @var array 
      */
-    protected static $_css = [];
+    protected static $css = [];
     
     /**
      * Included JSs
      * 
      * @var array 
      */
-    protected static $_js = [];
+    protected static $js = [];
     
     /**
      * Current template directory (set in constructor)
      *
      * @var string
      */
-    protected $_curDir = '';
+    protected $curDir = '';
     
     /**
      * Template content
      * 
      * @var string
      */
-    protected $_content = '';
+    protected $content = '';
     
     /**
      * Defined template variables
      * 
      * @var array
      */
-    protected $_data = [];
+    protected $data = [];
 
     /**
      * Constructor
@@ -59,7 +59,7 @@ class View
         if (!is_file($filePath))
             throw new SystemException('View not found');
 
-        $this->_curDir = dirname($filePath) . '/';
+        $this->curDir = dirname($filePath) . '/';
 
         if ($data)
             $this->set($data);
@@ -68,7 +68,7 @@ class View
 
         require $filePath;
 
-        $this->_content = ob_get_clean();
+        $this->content = ob_get_clean();
     }
 
     /**
@@ -81,9 +81,9 @@ class View
     public function set($key, $value = null)
     {
         if (is_array($key))
-            $this->_data = array_merge($key);
+            $this->data = array_merge($key);
         else
-            $this->_data[$key] = $value;
+            $this->data[$key] = $value;
 
         return $this;
     }
@@ -97,7 +97,7 @@ class View
      */
     public function get($key, $default = null)
     {
-        return isset($this->_data[$key]) ? $this->_data[$key] : $default;
+        return isset($this->data[$key]) ? $this->data[$key] : $default;
     }
 
     /**
@@ -109,15 +109,15 @@ class View
     public function css($path = null)
     {
         if (!$path)
-            return array_unique(static::$_css);
+            return array_unique(static::$css);
 
         if (is_array($path)) {
             foreach ($path as $value) {
                 $value = cfg()->hosts->static . '/css/' . $value . '.css';
-                static::$_css[] = $value;
+                static::$css[] = $value;
             }
         } else {
-            array_push(static::$_css, cfg()->hosts->static . '/css/' . $path . '.css');
+            array_push(static::$css, cfg()->hosts->static . '/css/' . $path . '.css');
         }
     }
 
@@ -130,15 +130,15 @@ class View
     public function js($path = null)
     {
         if (!$path)
-            return array_unique(static::$_js);
+            return array_unique(static::$js);
 
         if (is_array($path)) {
             foreach ($path as $value) {
                 $value = cfg()->hosts->static . '/js/' . $value . '.js';
-                static::$_js[] = $value;
+                static::$js[] = $value;
             }
         } else {
-            array_push(static::$_js, cfg()->hosts->static . '/js/' . $path . '.js');
+            array_push(static::$js, cfg()->hosts->static . '/js/' . $path . '.js');
         }
     }
 
@@ -163,7 +163,7 @@ class View
     public function tpl($path)
     {
         ob_start();
-        require $this->_curDir . $path . '.php';
+        require $this->curDir . $path . '.php';
         return ob_get_clean();
     }
 
@@ -174,7 +174,7 @@ class View
      */
     public function render()
     {
-        return $this->_content;
+        return $this->content;
     }
 
     /**

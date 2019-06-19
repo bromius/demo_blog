@@ -11,30 +11,30 @@ use Application\Core\Pagination;
  */
 class Db implements Interfaces\Initializable
 {
-    protected static $_instance;
-    protected static $_connection;
-    protected $_resource;
+    protected static $instance;
+    protected static $connection;
+    protected $resource;
 
     public static function init()
     {
-        if (static::$_instance)
-            return static::$_instance;
+        if (static::$instance)
+            return static::$instance;
 
-        if (!static::$_connection = mysqli_connect(cfg()->db->host, cfg()->db->user, cfg()->db->password))
+        if (!static::$connection = mysqli_connect(cfg()->db->host, cfg()->db->user, cfg()->db->password))
             throw new SystemException('DB connection failed');
 
-        if (!mysqli_select_db(static::$_connection, cfg()->db->name))
+        if (!mysqli_select_db(static::$connection, cfg()->db->name))
             throw new SystemException('DB connection failed');
 
         // Set charset
-        mysqli_set_charset(static::$_connection, cfg()->db->encoding);
+        mysqli_set_charset(static::$connection, cfg()->db->encoding);
 
         // Set timezone
         $dt = new \DateTime();
         $offset = $dt->format('P');
-        static::$_connection->query('SET `time_zone` = "' . $offset . '";');
+        static::$connection->query('SET `time_zone` = "' . $offset . '";');
 
-        return static::$_instance = new static();
+        return static::$instance = new static();
     }
 
     public function escape($sql, $args = null)
@@ -43,7 +43,7 @@ class Db implements Interfaces\Initializable
         $queryString = array_shift($args);
 
         $index = 0;
-        return preg_replace_callback('/#./u', function($matches) use ($args, &$index) {
+        return preg_replace_callback('/#./u', function ($matches) use ($args, &$index) {
             switch ($matches[0]) {
                 // Bool
                 case '#b':
@@ -53,7 +53,7 @@ class Db implements Interfaces\Initializable
                     return intval($args[$index++]);
                 // String
                 case '#s':
-                    return "'" . mysqli_real_escape_string(static::$_connection, $args[$index++]) . "'";
+                    return "'" . mysqli_real_escape_string(static::$connection, $args[$index++]) . "'";
                 // Plain query
                 case '#q':
                 case '#p':
@@ -65,16 +65,16 @@ class Db implements Interfaces\Initializable
     public function query($sql, $args = null)
     {
         $sql = call_user_func_array([$this, 'escape'], func_get_args());
-        if (!$this->_resource = mysqli_query(static::$_connection, $sql))
-            throw new SystemException('Query error: ' . print_r($sql, true) . PHP_EOL . mysqli_error(static::$_connection));
-        return $this->_resource;
+        if (!$this->resource = mysqli_query(static::$connection, $sql))
+            throw new SystemException('Query error: ' . print_r($sql, true) . PHP_EOL . mysqli_error(static::$connection));
+        return $this->resource;
     }
 
     public function selectRow($sql, $args = null)
     {
         call_user_func_array([$this, 'query'], func_get_args());
-        if ($this->_resource && mysqli_num_rows($this->_resource))
-            return mysqli_fetch_assoc($this->_resource);
+        if ($this->resource && mysqli_num_rows($this->resource))
+            return mysqli_fetch_assoc($this->resource);
         return [];
     }
 
@@ -88,8 +88,8 @@ class Db implements Interfaces\Initializable
     {
         call_user_func_array([$this, 'query'], func_get_args());
         $rows = [];
-        if ($this->_resource && mysqli_num_rows($this->_resource)) {
-            while ($row = mysqli_fetch_assoc($this->_resource))
+        if ($this->resource && mysqli_num_rows($this->resource)) {
+            while ($row = mysqli_fetch_assoc($this->resource))
                 $rows[reset($row)] = $row;
         }
         return $rows;
@@ -97,7 +97,7 @@ class Db implements Interfaces\Initializable
 
     public function getInsertId()
     {
-        return mysqli_insert_id(static::$_connection);
+        return mysqli_insert_id(static::$connection);
     }
 
     public function foundRows()

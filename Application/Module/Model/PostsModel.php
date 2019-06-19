@@ -2,7 +2,7 @@
 
 namespace Application\Module\Model;
 
-use Application\Core\String;
+use Application\Core\Strings;
 use Application\Core\Db;
 use Application\Core\Exceptions\PublicException;
 
@@ -16,7 +16,7 @@ class PostsModel extends \Application\Core\Model
      * 
      * @var string
      */
-    protected static $_table = 'posts';
+    protected static $table = 'posts';
 
     const STATUS_PUBLISHED = 'published';
     const STATUS_REMOVED = 'removed';
@@ -28,7 +28,7 @@ class PostsModel extends \Application\Core\Model
      */
     public function title()
     {
-        return String::escape($this->col(__FUNCTION__));
+        return Strings::escape($this->col(__FUNCTION__));
     }
 
     /**
@@ -38,7 +38,7 @@ class PostsModel extends \Application\Core\Model
      */
     public function content()
     {
-        return String::text($this->col(__FUNCTION__));
+        return Strings::text($this->col(__FUNCTION__));
     }
 
     /**

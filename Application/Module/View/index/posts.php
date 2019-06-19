@@ -1,6 +1,6 @@
 <?php
 use Application\Core\Request;
-use Application\Core\String;
+use Application\Core\Strings;
 use Application\Module\Model\UsersModel;
 use Application\Module\Model\PostsModel;
 
@@ -30,7 +30,7 @@ $this->css('index');
 								</a>
 							<?php endif ?>
 							
-							<?= String::text($row->content(), 150) ?>
+							<?= Strings::text($row->content(), 150) ?>
 							
 							<br />
 							
