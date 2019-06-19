@@ -5,6 +5,7 @@
 
 ###### Includes:
 
+- PHP7 benefits
 - Simple MVC model
 - Namespaces and autoload
 - Exceptions and errors handling
