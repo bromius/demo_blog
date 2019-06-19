@@ -15,8 +15,9 @@ class Arrays
      */
     public static function toObject($array)
     {
-        if (!is_array($array) || !static::isAssoc($array))
+        if (!is_array($array) || !static::isAssoc($array)) {
             return $array;
+        }
         return (object) array_map(['static', __FUNCTION__], $array);
     }
 

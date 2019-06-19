@@ -40,13 +40,16 @@ final class Bootstrap implements Core\Interfaces\Initializable
             Core\Errors::init();
             Core\Config::init();
             Core\Request::init();
+            
+            Core\Request::post('test');
 
             print static::run();
         } catch (\Throwable $e) {
             try {
                 // Flush previous output
-                if (ob_get_length())
+                if (ob_get_length()) {
                     ob_end_clean();
+                }
 
                 // Log system errors
                 if (!($e instanceof Core\Exceptions\PublicException)) {

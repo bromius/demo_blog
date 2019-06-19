@@ -56,13 +56,15 @@ class View
     {
         $filePath = APP_DIR . 'Module/View/' . $path . '.php';
 
-        if (!is_file($filePath))
+        if (!is_file($filePath)) {
             throw new SystemException('View not found');
+        }
 
         $this->curDir = dirname($filePath) . '/';
 
-        if ($data)
+        if ($data) {
             $this->set($data);
+        }
 
         ob_start();
 
@@ -80,10 +82,11 @@ class View
      */
     public function set($key, $value = null)
     {
-        if (is_array($key))
+        if (is_array($key)) {
             $this->data = array_merge($key);
-        else
+        } else {
             $this->data[$key] = $value;
+        }
 
         return $this;
     }
@@ -97,7 +100,7 @@ class View
      */
     public function get($key, $default = null)
     {
-        return isset($this->data[$key]) ? $this->data[$key] : $default;
+        return $this->data[$key] ?? $default;
     }
 
     /**
@@ -108,8 +111,9 @@ class View
      */
     public function css($path = null)
     {
-        if (!$path)
+        if (!$path) {
             return array_unique(static::$css);
+        }
 
         if (is_array($path)) {
             foreach ($path as $value) {
@@ -129,8 +133,9 @@ class View
      */
     public function js($path = null)
     {
-        if (!$path)
+        if (!$path) {
             return array_unique(static::$js);
+        }
 
         if (is_array($path)) {
             foreach ($path as $value) {

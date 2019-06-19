@@ -16,20 +16,22 @@ class Img
     {
         list ($this->width, $this->height, $this->imageType) = getimagesize($fileName);
 
-        if ($this->imageType == IMAGETYPE_JPEG)
+        if ($this->imageType == IMAGETYPE_JPEG) {
             $this->image = imagecreatefromjpeg($fileName);
-        else if ($this->imageType == IMAGETYPE_GIF)
+        } elseif ($this->imageType == IMAGETYPE_GIF) {
             $this->image = imagecreatefromgif($fileName);
-        else if ($this->imageType == IMAGETYPE_PNG)
+        } elseif ($this->imageType == IMAGETYPE_PNG) {
             $this->image = imagecreatefrompng($fileName);
+        }
 
         return $this;
     }
 
     public function width($width = null)
     {
-        if (!$width)
+        if (!$width) {
             return $this->width;
+        }
 
         $ratio = $width / imagesx($this->image);
         $height = imagesy($this->image) * $ratio;
@@ -40,8 +42,9 @@ class Img
 
     public function height($height = null)
     {
-        if (!$height)
+        if (!$height) {
             return $this->height;
+        }
 
         $ratio = $height / imagesy($this->image);
         $width = imagesx($this->image) * $ratio;
@@ -94,20 +97,21 @@ class Img
             } else {
                 imagejpeg($this->image, $filePath, $compression);
             }
-        } else if ($type == IMAGETYPE_GIF) {
+        } elseif ($type == IMAGETYPE_GIF) {
             imagegif($this->image, $filePath);
-        } else if ($type == IMAGETYPE_PNG) {
+        } elseif ($type == IMAGETYPE_PNG) {
             imagepng($this->image, $filePath);
         }
     }
 
     public function output($type = IMAGETYPE_JPEG)
     {
-        if ($type == IMAGETYPE_JPEG)
+        if ($type == IMAGETYPE_JPEG) {
             imagejpeg($this->image);
-        else if ($type == IMAGETYPE_GIF)
+        } elseif ($type == IMAGETYPE_GIF) {
             imagegif($this->image);
-        else if ($type == IMAGETYPE_PNG)
+        } elseif ($type == IMAGETYPE_PNG) {
             imagepng($this->image);
+        }
     }
 }

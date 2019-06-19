@@ -43,11 +43,13 @@ class Request implements Interfaces\Initializable
 
     protected static function _set($name, $value = null)
     {
-        if (!is_array($name))
+        if (!is_array($name)) {
             $name = [$name => $value];
+        }
         foreach ($name as $key => $value) {
-            if (is_scalar($value))
+            if (is_scalar($value)) {
                 $value = trim($value);
+            }
             static::$request[$key] = $value;
         }
     }
@@ -55,23 +57,26 @@ class Request implements Interfaces\Initializable
     public static function get($name, $default = null, $type = self::BOTH)
     {
         if ($type != static::BOTH) {
-            if ($type == static::POST)
-                $value = isset($_POST[$name]) ? $_POST[$name] : null;
-            else if ($type == static::GET)
-                $value = isset($_GET[$name]) ? $_GET[$name] : null;
+            if ($type == static::POST) {
+                $value = $_POST[$name] ?? null;
+            } elseif ($type == static::GET) {
+                $value = $_GET[$name] ?? null;
+            }
         } else {
-            $value = isset(static::$request[$name]) ? static::$request[$name] : null;
+            $value = static::$request[$name] ?? null;
         }
 
-        if ($value === '')
+        if ($value === '') {
             $value = null;
+        }
 
         if ($default) {
             if (is_numeric($default)) {
-                if ((int) $default == $default)
+                if ((int) $default == $default) {
                     $default = (int) $default;
-                else
+                } else {
                     $default = (float) $default;
+                }
             } else {
                 $default = is_string($default) ? trim(urldecode($default)) : $default;
             }
@@ -79,10 +84,11 @@ class Request implements Interfaces\Initializable
 
         if ($value) {
             if (is_numeric($value)) {
-                if ((int) $value == $value)
+                if ((int) $value == $value) {
                     $value = (int) $value;
-                else
+                } else {
                     $value = (float) $value;
+                }
             } else {
                 $value = is_string($value) ? trim(urldecode($value)) : $value;
             }
@@ -135,8 +141,9 @@ class Request implements Interfaces\Initializable
     public static function ip($asInteger = true)
     {
         $ip = $_SERVER['REMOTE_ADDR'];
-        if ($asInteger)
+        if ($asInteger) {
             $ip = (double) sprintf("%u\n", ip2long($ip));
+        }
         return $ip;
     }
 

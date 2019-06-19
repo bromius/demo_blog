@@ -17,14 +17,17 @@ class Db implements Interfaces\Initializable
 
     public static function init()
     {
-        if (static::$instance)
+        if (static::$instance) {
             return static::$instance;
+        }
 
-        if (!static::$connection = mysqli_connect(cfg()->db->host, cfg()->db->user, cfg()->db->password))
+        if (!static::$connection = mysqli_connect(cfg()->db->host, cfg()->db->user, cfg()->db->password)) {
             throw new SystemException('DB connection failed');
+        }
 
-        if (!mysqli_select_db(static::$connection, cfg()->db->name))
+        if (!mysqli_select_db(static::$connection, cfg()->db->name)) {
             throw new SystemException('DB connection failed');
+        }
 
         // Set charset
         mysqli_set_charset(static::$connection, cfg()->db->encoding);
@@ -65,16 +68,18 @@ class Db implements Interfaces\Initializable
     public function query($sql, $args = null)
     {
         $sql = call_user_func_array([$this, 'escape'], func_get_args());
-        if (!$this->resource = mysqli_query(static::$connection, $sql))
+        if (!$this->resource = mysqli_query(static::$connection, $sql)) {
             throw new SystemException('Query error: ' . print_r($sql, true) . PHP_EOL . mysqli_error(static::$connection));
+        }
         return $this->resource;
     }
 
     public function selectRow($sql, $args = null)
     {
         call_user_func_array([$this, 'query'], func_get_args());
-        if ($this->resource && mysqli_num_rows($this->resource))
+        if ($this->resource && mysqli_num_rows($this->resource)) {
             return mysqli_fetch_assoc($this->resource);
+        }
         return [];
     }
 
@@ -89,8 +94,9 @@ class Db implements Interfaces\Initializable
         call_user_func_array([$this, 'query'], func_get_args());
         $rows = [];
         if ($this->resource && mysqli_num_rows($this->resource)) {
-            while ($row = mysqli_fetch_assoc($this->resource))
+            while ($row = mysqli_fetch_assoc($this->resource)) {
                 $rows[reset($row)] = $row;
+            }
         }
         return $rows;
     }

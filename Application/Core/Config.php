@@ -48,9 +48,10 @@ namespace Application\Core
          */
         public static function get()
         {
-            if (!static::$data)
+            if (!static::$data) {
                 static::init();
-            return isset(static::$data) ? static::$data : null;
+            }
+            return static::$data ?? null;
         }
     }
 }

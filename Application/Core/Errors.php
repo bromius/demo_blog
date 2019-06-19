@@ -13,8 +13,9 @@ class Errors implements Interfaces\Initializable
     public static function init()
     {
         register_shutdown_function(function () {
-            if (!$error = error_get_last())
+            if (!$error = error_get_last()) {
                 return;
+            }
 
             // register_shutdown_function can change current working directory.
             // Set working directory back to APP_DIR
@@ -32,8 +33,9 @@ class Errors implements Interfaces\Initializable
         });
 
         set_error_handler(function ($errno, $message, $file, $line) {
-            if (WORK_MODE == 'production' && in_array($errno, [E_WARNING, E_NOTICE]))
+            if (WORK_MODE == 'production' && in_array($errno, [E_WARNING, E_NOTICE])) {
                 return;
+            }
 
             $errorStr = static::_prepareMessage([
                         'error' => 'Error',
@@ -51,11 +53,13 @@ class Errors implements Interfaces\Initializable
     {
         $s = '';
 
-        if (!empty($_SERVER['HTTP_REFERER']))
+        if (!empty($_SERVER['HTTP_REFERER'])) {
             $s .= 'Referrer: ' . $_SERVER['HTTP_REFERER'] . "\n";
+        }
 
-        if (!empty($_SERVER['REQUEST_URI']))
+        if (!empty($_SERVER['REQUEST_URI'])) {
             $s .= 'URI: ' . $_SERVER['REQUEST_URI'] . "\n";
+        }
 
         $s = "Error: #" . $errno . " " . $errstr . " [" . $errfile . ":" . $errline . "]\n";
         $s .= "Backtrace:\n";
@@ -67,43 +71,48 @@ class Errors implements Interfaces\Initializable
             $backtrace = '';
 
             foreach ($backtrace_array as $key => $record) {
-                if ($key == 0)
+                if ($key == 0) {
                     continue;
+                }
                 $backtrace .= '#' . $key . ': ' . $record['function'] . '(';
                 if (isset($record['args']) && is_array($record['args'])) {
                     $args = [];
                     foreach ($record['args'] as &$arg) {
-                        if (is_object($arg) && !method_exists($arg, '__toString'))
+                        if (is_object($arg) && !method_exists($arg, '__toString')) {
                             $args[] = 'Object';
-                        else if (is_array($arg))
+                        } elseif (is_array($arg)) {
                             $args[] = 'Array';
-                        else
+                        } else {
                             $args[] = $arg;
+                        }
                     }
                     unset($arg);
                     $backtrace .= implode(',', $args);
                 }
-                $backtrace .= ') called at [' . ( isset($record['file']) ? $record['file'] : '?') . ':' . ( isset($record['line']) ? $record['line'] : '?') . "]\n";
+                $backtrace .= ') called at [' . ($record['file'] ?? '?') . ':' . ($record['line'] ?? '?') . "]\n";
             }
 
             $s .= $backtrace;
         }
 
-        if (in_array($errno, [E_WARNING, E_NOTICE]))
+        if (in_array($errno, [E_WARNING, E_NOTICE])) {
             Log::warning($s, false, true);
-        else
+        } else {
             Log::error($s, false, true);
+        }
     }
 
     protected static function _prepareMessage($message)
     {
         $preparedMessage = '';
 
-        if (!empty($_SERVER['HTTP_REFERER']))
+        if (!empty($_SERVER['HTTP_REFERER'])) {
             $preparedMessage .= 'Referrer: ' . $_SERVER['HTTP_REFERER'] . "\n";
+        }
 
-        if (!empty($_SERVER['REQUEST_URI']))
+        if (!empty($_SERVER['REQUEST_URI'])) {
             $preparedMessage .= 'URI: ' . $_SERVER['REQUEST_URI'] . "\n";
+        }
 
         $preparedMessage = is_array($message) ? json_encode($message, JSON_PRETTY_PRINT) : $message;
 

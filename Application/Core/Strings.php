@@ -17,8 +17,9 @@ class Strings
     {
         $str = static::escape($str);
 
-        if ($limit)
+        if ($limit) {
             $str = mb_substr($str, 0, $limit - 3, 'utf-8') . '...';
+        }
 
         return nl2br($str);
     }
@@ -49,8 +50,9 @@ class Strings
 				. ($charsOnly ? '' : '0123456789');
         
 		$result = '';
-		while (strlen($result) < $length)
+		while (strlen($result) < $length) {
 			$result .= str_shuffle($alphaNumeric);
+        }
         
 		return substr($result, 0, $length);
 	}

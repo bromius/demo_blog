@@ -31,20 +31,25 @@ class AuthController extends \Application\Core\Controller
         
         Security::checkCSRFToken($csrfToken);
 
-        if (!mb_eregi("^([a-z0-9_\.\-]{1,25})@([a-z0-9\.\-]{1,20})\.([a-z]{2,4})$", $email))
+        if (!mb_eregi("^([a-z0-9_\.\-]{1,25})@([a-z0-9\.\-]{1,20})\.([a-z]{2,4})$", $email)) {
             return static::result(false, 'Email введен неверно');
+        }
 
-        if (!$password || !$passwordConfirm)
+        if (!$password || !$passwordConfirm) {
             return static::result(false, 'Необходимо ввести пароль');
+        }
 
-        if (mb_strlen($password, 'utf8') <  static::PASSWORD_MIN_LENGTH)
+        if (mb_strlen($password, 'utf8') <  static::PASSWORD_MIN_LENGTH) {
             return static::result(false, 'Пароль должен содержать минимум ' . static::PASSWORD_MIN_LENGTH . ' символов');
+        }
 
-        if ($password != $passwordConfirm)
+        if ($password != $passwordConfirm) {
             return static::result(false, 'Пароли не совпадают');
+        }
 
-        if (UsersModel::getByEmail($email)->exists())
+        if (UsersModel::getByEmail($email)->exists()) {
             return static::result(false, 'Этот Email уже занят. Пожалуйста, выберите другой');
+        }
 
         UsersModel::insert([
             'email' => $email,
@@ -69,8 +74,9 @@ class AuthController extends \Application\Core\Controller
 
         $user = UsersModel::getByEmail($email);
 
-        if (!$user || !password_verify($password . cfg()->salt->common, $user->password))
+        if (!$user || !password_verify($password . cfg()->salt->common, $user->password)) {
             return static::result(false, 'Логин или пароль введены неверно');
+        }
 
         setcookie('uid', $user->id, strtotime('+1 month'), '/', null, false, true);
         setcookie('skey', password_hash($user->password . cfg()->salt->common, PASSWORD_DEFAULT), strtotime('+1 month'), '/', null, false, true);

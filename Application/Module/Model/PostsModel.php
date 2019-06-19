@@ -95,10 +95,11 @@ class PostsModel extends \Application\Core\Model
     public function isMine($throwException = true)
     {
         if ($this->user_id != UsersModel::get()->id) {
-            if ($throwException)
+            if ($throwException) {
                 throw new PublicException('У Вас недостаточно прав для доступа к этому материалу');
-            else
+            } else {
                 return false;
+            }
         }
         return true;
     }
@@ -113,10 +114,11 @@ class PostsModel extends \Application\Core\Model
     public function isPublished($throwException = true)
     {
         if ($this->status != static::STATUS_PUBLISHED) {
-            if ($throwException)
+            if ($throwException) {
                 throw new PublicException('Пост не найден');
-            else
+            } else {
                 return false;
+            }
         }
         return true;
     }

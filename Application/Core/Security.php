@@ -62,13 +62,15 @@ class Security
         if ($token) {
             list($salt, $time, $hash) = explode(':', $token);
             if ($time >= time() - static::CSRF_EXPIRE_SEC) {
-                if (static::getCSRFToken($salt, $time) == $token)
+                if (static::getCSRFToken($salt, $time) == $token) {
                     return true;
+                }
             }
         }
         
-        if ($throwException)
+        if ($throwException) {
             throw new PublicException('Invalid parameters. Please reload the page');
+        }
         
         return false;
     }

@@ -53,12 +53,14 @@ abstract class Model
      */
     protected static function _escapeFieldsData(array $data)
     {
-        if (!Arrays::isAssoc($data))
+        if (!Arrays::isAssoc($data)) {
             throw new SystemException('Invalid fields data');
+        }
 
         $insertSql = [];
-        foreach ($data as $key => $value)
+        foreach ($data as $key => $value) {
             $insertSql[] = Db::init()->escape('`' . $key . '` = #s', $value);
+        }
 
         return implode(",\n", $insertSql);
     }
@@ -80,8 +82,9 @@ abstract class Model
             static::_escapeFieldsData($data)
         );
 
-        if (!$query)
+        if (!$query) {
             throw new SystemException('DB insert failed');
+        }
 
         $id = Db::init()->getInsertId();
 
@@ -148,12 +151,14 @@ abstract class Model
      */
     public static function getMultiple($sql, $args = null)
     {
-        if (!$rows = call_user_func_array([Db::init(), 'selectRows'], func_get_args()))
+        if (!$rows = call_user_func_array([Db::init(), 'selectRows'], func_get_args())) {
             return [];
+        }
 
         $models = [];
-        foreach ($rows as $row)
+        foreach ($rows as $row) {
             $models[reset($row)] = static::instance($row);
+        }
 
         return $models;
     }
@@ -200,8 +205,9 @@ abstract class Model
      */
     public function __construct($data = [])
     {
-        if (!$data)
+        if (!$data) {
             return $this;
+        }
         $this->data = $data;
     }
 

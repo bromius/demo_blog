@@ -51,25 +51,31 @@ class PostController extends \Application\Core\Controller
         
         Security::checkCSRFToken($csrfToken);
 
-        if (!preg_match('/.{1,100}/ui', $title))
+        if (!preg_match('/.{1,100}/ui', $title)) {
             return static::result(false, 'Заголовок должен содержать от 1 до 100 символов');
+        }
 
-        if (!preg_match('/.{1,1000}/ui', $content))
+        if (!preg_match('/.{1,1000}/ui', $content)) {
             return static::result(false, 'Текст должен содержать от 1 до 1000 символов');
+        }
 
         if ($img) {
             list ($width, $height, $fileType) = getimagesize($img['tmp_name']);
 
-            if (!in_array($fileType, [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG]))
+            if (!in_array($fileType, [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG])) {
                 return static::result(false, 'Неверный формат файла. Необходимо загрузить изображение');
+            }
 
             $image = new Img();
             $image->load($img['tmp_name']);
 
-            if ($width > 320)
+            if ($width > 320) {
                 $image->width(320);
-            if ($height > 240)
+            }
+            
+            if ($height > 240) {
                 $image->width(240);
+            }
 
             $imgFileName = uniqid() . '.jpg';
 
@@ -83,8 +89,9 @@ class PostController extends \Application\Core\Controller
             'content' => $content
         ];
 
-        if ($imgFileName)
+        if ($imgFileName) {
             $data['img'] = $imgFileName;
+        }
 
         if ($id) {
             $post = PostsModel::get($id);

@@ -16,12 +16,13 @@ class Registry
 
     public static function get($key)
     {
-        return isset(static::$data[$key]) ? static::$data[$key] : null;
+        return static::$data[$key] ?? null;
     }
 
     public static function remove($key)
     {
-        if (array_key_exists($key, static::$data))
+        if (array_key_exists($key, static::$data)) {
             unset(static::$data[$key]);
+        }
     }
 }

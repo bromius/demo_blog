@@ -26,11 +26,13 @@ class UsersModel extends \Application\Core\Model
      */
     public static function get($id = null)
     {
-        if (Registry::get(__CLASS__ . ':' . __METHOD__ . ':' . $id))
+        if (Registry::get(__CLASS__ . ':' . __METHOD__ . ':' . $id)) {
             return Registry::get(__CLASS__ . ':' . __METHOD__ . ':' . $id);
+        }
 
-        if (!$id && isset($_COOKIE['uid']))
+        if (!$id && isset($_COOKIE['uid'])) {
             $id = $_COOKIE['uid'];
+        }
 
         return Registry::set(__CLASS__ . ':' . __METHOD__ . ':' . $id, parent::get($id));
     }
@@ -57,8 +59,9 @@ class UsersModel extends \Application\Core\Model
      */
     public function isOnline()
     {
-        if (empty($_COOKIE['skey']))
+        if (empty($_COOKIE['skey'])) {
             return false;
+        }
         
         return $this->id 
             && $_COOKIE['skey'] 

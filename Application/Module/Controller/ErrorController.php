@@ -18,8 +18,9 @@ class ErrorController extends \Application\Core\Controller
      */
     public static function indexAction($message = '')
     {
-        if (Request::isAjax())
+        if (Request::isAjax()) {
             return static::result(false, $message ?: 'Произошла ошибка');
+        }
 
         return static::view('index', [
             'content' => static::view('index/error', [

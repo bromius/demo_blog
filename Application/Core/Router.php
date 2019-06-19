@@ -37,8 +37,9 @@ class Router implements Interfaces\Initializable
      */
     public static function init()
     {
-        if (static::$instance)
+        if (static::$instance) {
             return static::$instance;
+        }
 
         $url = Url::parse(Request::uri());
         $urlParts = explode('/', trim($url->path, '/'));
@@ -46,12 +47,14 @@ class Router implements Interfaces\Initializable
         static::$instance = new static();
 
         // Controller
-        if (!empty($urlParts[0]))
+        if (!empty($urlParts[0])) {
             static::$instance->controller = ucfirst(strtolower($urlParts[0])) . 'Controller';
+        }
 
         // Action
-        if (!empty($urlParts[1]))
+        if (!empty($urlParts[1])) {
             static::$instance->action = lcfirst(strtolower($urlParts[1])) . 'Action';
+        }
 
         return static::$instance;
     }

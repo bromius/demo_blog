@@ -70,8 +70,9 @@ class Log
         $path = ROOT_DIR . 'logs/' . $fileName . '.log';
         $pathDir = dirname($path);
         
-        if (!is_dir($pathDir))
+        if (!is_dir($pathDir)) {
             mkdir($pathDir, 0755, true);
+        }
         
         file_put_contents(
             $path,
