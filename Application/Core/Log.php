@@ -21,7 +21,7 @@ class Log
         $str .= print_r($data, true);
         $str .= "\n< End =========================================\n\n";
         
-        self::writeLog($str, 'debug' . $dayLog ? date('/Y/m/d') : '');
+        self::writeLog($str, 'debug' . ($dayLog ? date('/Y/m/d') : ''));
     }
 
     /**
@@ -38,7 +38,7 @@ class Log
         $str .= print_r($data, true);
         $str .= "\n< End =========================================\n\n";
         
-        self::writeLog($str, 'warnings' . $dayLog ? date('/Y/m/d') : '');
+        self::writeLog($str, 'warnings' . ($dayLog ? date('/Y/m/d') : ''));
     }
 
     /**
@@ -55,7 +55,7 @@ class Log
         $str .= print_r($data, true);
         $str .= "\n< End =========================================\n\n";
         
-        self::writeLog($str, 'errors' . $dayLog ? date('/Y/m/d') : '');
+        self::writeLog($str, 'errors' . ($dayLog ? date('/Y/m/d') : ''));
     }
 
     /**

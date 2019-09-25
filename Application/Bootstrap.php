@@ -80,6 +80,12 @@ final class Bootstrap implements Core\Interfaces\Initializable
     public static function run()
     {
         $router = Core\Router::init();
+		$controllerClass = 'Application\Module\Controller\\' . $router->controller();
+		
+		if (!class_exists($controllerClass) || !method_exists($controllerClass, $router->action())) {
+			throw new Core\Exceptions\PublicException('Page not found (404)');
+		}
+		
         return call_user_func([
             'Application\Module\Controller\\' . $router->controller(), 
             $router->action()

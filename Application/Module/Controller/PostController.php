@@ -99,7 +99,7 @@ class PostController extends \Application\Core\Controller
             $post = $post->update($data);
         } else {
             $post = PostsModel::insert(array_merge($data, [
-                        'user_id' => $userId
+                'user_id' => $userId
             ]));
         }
 

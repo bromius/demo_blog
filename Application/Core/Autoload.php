@@ -14,8 +14,6 @@ class Autoload implements Interfaces\Initializable
 
     /**
      * Initialization
-     * 
-     * @throws Exceptions\SystemException
      */
     public static function init()
     {

@@ -34,7 +34,12 @@ class Errors implements Interfaces\Initializable
 
         set_error_handler(function ($errno, $message, $file, $line) {
             if (WORK_MODE == 'production' && in_array($errno, [E_WARNING, E_NOTICE])) {
-                return;
+				return static::handler(
+					$errno,
+					$message,
+					$file,
+					$line
+				);
             }
 
             $errorStr = static::_prepareMessage([
